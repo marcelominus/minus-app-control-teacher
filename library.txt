@@ -1,0 +1,50 @@
+//REACT NATIVE NAVIGATION
+yarn add @react-navigation/native @react-navigation/stack @react-navigation/bottom-tabs @react-navigation/drawer
+yarn add react-native-reanimated react-native-gesture-handler react-native-screens react-native-safe-area-context @react-native-community/masked-view
+
+//REACT NATIVE AXIOS
+yarn add axios
+
+//REACT NATIVE TOAST
+yarn add react-native-simple-toast
+
+//REACT NATIVE PAPER MATERIL UI
+yarn add react-native-paper
+yarn add react-native-vector-icons
+react-native link react-native-vector-icons
+
+//REACT NATIVE INFO INTERNET CONECTION
+yarn add @react-native-community/netinfo
+react-native link @react-native-community/netinfo
+
+//REACT NATIVE OPRIENTATION INFORMATION ORIENTATION
+yarn add @rnhooks/device-orientation
+
+//REACT NATIVE ORIENTATIONS LOCKER
+yarn add react-native-orientation-locker
+react-native link react-native-orientation-locker
+
+//REACT NATIVE MODAL
+yarn add react-native-modal
+
+//REACT NATIVE ALERTS
+yarn add react-native-awesome-alerts
+
+//REACT NATIVE DATA PICKER TIME
+yarn add @react-native-community/datetimepicker
+react-native link @react-native-community/datetimepicker
+
+//REACT NATIVE SYNC STORAGE
+yarn add @react-native-async-storage/async-storage
+react-native link @react-native-async-storage/async-storage
+
+//REACT NATIVE IMAGE PICKER
+yarn add react-native-image-picker
+react-native link react-native-image-picker
+<uses-permission android:name="android.permission.CAMERA"/>
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
+//REACT NATIVE STYLES EXTENDED
+yarn add react-native-extended-stylesheet
+
+https://coolors.co/353535-3c6e71-ffffff-d9d9d9-284b63
