@@ -2,29 +2,38 @@ import React from 'react';
 //*******************************************************
 //
 import {View, Text} from 'react-native';
+
 //*******************************************************
 //
 import {styles} from '../resource/style/screen/styleLogin';
+
 //*******************************************************
 //
-import { Button } from 'react-native-paper';
-
+import ToolBarNormal from '../components/tool/ToolBarNormal';
+import FormLogin from '../components/login/FormLogin';
 // =====================================================
 // INICIO DE CLASE  */}
 // =====================================================
 const Login = ({navigation}) => {
-    const onPressDos = () =>{
-      navigation.navigate('form');
-    }
     // =====================================================
     // INICIO DE COMPONENTE}
     // =====================================================
     return ( 
         <View style={styles.container}>
-            <Text>DESDE EL LOGIN MARCELO d</Text>
-            <Button icon="camera" mode="contained" onPress={onPressDos}>
-              Press me
-            </Button>
+            {/* --------------------------------------------------  */}
+            <View style = {styles.section_1}>
+              <ToolBarNormal title={'Login'}/>
+            </View>
+            {/* --------------------------------------------------  */}
+            <View style = {styles.section_2}>
+              <FormLogin navigation={navigation}/>
+            </View>
+            <View style = {styles.section_3}>
+            </View>
+            {/* --------------------------------------------------  */}
+            <View style = {styles.section_4}>
+              <Text style={styles.footer}>Electronica 2020 - Minus Maya</Text>
+            </View>
         </View>
      );
 }

@@ -43,8 +43,8 @@ const Routes = () => {
                         title: 'Formulario',
                 }}/> 
                 <Drawer.Screen 
-                    name='information' 
-                    component={Information} 
+                    name='list' 
+                    component={InformationList} 
                     options={{
                         title: 'Informacion',
                 }}/> 
@@ -91,11 +91,11 @@ const Routes = () => {
                     component={DrawerNavigation}
                 />
                 <Stack.Screen 
-                    name="list"
+                    name="information"
                     options={{
                         headerShown: false,
                     }}
-                    component={InformationList}
+                    component={Information}
                 />
             </Stack.Navigator>
         </NavigationContainer>

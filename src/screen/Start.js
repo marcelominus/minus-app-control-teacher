@@ -14,6 +14,12 @@ import { Button } from 'react-native-paper';
 // =====================================================
 const Start = ({navigation}) => {
     
+    //-------------------------------------------------------
+    //  ZONE FUNTION
+    const onPressWelcome = () => {
+        navigation.navigate('login');
+    }
+    
     // =====================================================
     // INICIO DE COMPONENTE}
     // =====================================================
@@ -26,19 +32,23 @@ const Start = ({navigation}) => {
                 />
             </View>
             <View style={styles.section_2}>
-                <Text>Welcome</Text>
-                <Button 
-                    // icon="camera" 
-                    mode="contained"
-                    style={styles.button_welcome}
-                    labelStyle={styles.text_button_welcome}
-                >
-                    INGRESAR
-                </Button>
                 <Image
                   style={styles.image_logo}
                   source={require('../resource/img/umsaelectronica.jpg')}
                 />
+                <Text style={styles.text_welcome}>Bienvenido</Text>
+                <Button 
+                    mode="contained"
+                    style={styles.button_welcome}
+                    labelStyle={styles.text_button_welcome}
+                    onPress = {onPressWelcome}
+                >
+                    Ingresar
+                </Button>
+                
+            </View>
+            <View style={styles.section_3}>
+                <Text style={styles.footer}>Electronica 2020 - Minus Maya</Text>
             </View>
         </View>
      );

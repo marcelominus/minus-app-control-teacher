@@ -1,0 +1,35 @@
+import ImageView from 'react-native-image-view';
+
+const images = [
+    {
+        source: {
+            uri: 'https://cdn.pixabay.com/photo/2017/08/17/10/47/paris-2650808_960_720.jpg',
+        },
+        title: 'Paris',
+        width: 806,
+        height: 720,
+    },
+];
+    const [view, setView] = useState(false)
+    const onPressView = () => {
+        setView(!view)
+    }
+
+<Button 
+            icon="camera" 
+            mode="contained" 
+            onPress={onPressView}>
+               Press me
+             </Button>
+            <View>
+                <ImageView
+                    images={images}
+                    imageIndex={0}
+                    isVisible={view}
+                    renderFooter={(currentImage) => (<View><Text>My footer</Text></View>)
+                    }
+                    onClose={() => setView(false)}
+                    animationType={'fade'}
+                    animated={true}
+                />
+            </View>

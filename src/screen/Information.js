@@ -1,18 +1,31 @@
 import React from 'react';
 //*******************************************************
 //
-import {View, Text} from 'react-native';
+import {View, Text, ScrollView} from 'react-native';
 //*******************************************************
 //
 import {styles} from '../resource/style/screen/styleInformation';
-import { Button } from 'react-native-paper';
-
+//*******************************************************
+//
+import { Button, FAB } from 'react-native-paper';
+//*******************************************************
+//
+import ToolBarNormal from '../components/tool/ToolBarNormal';
+//*******************************************************
+//
+import FormInformation from '../components/information/FormInformation';
+import ListInformation from '../components/information/ListInformation';
 // =====================================================
 // INICIO DE CLASE  */}
 // =====================================================
-const Information = ({navigation}) => {
-
-    const onPressDos = () => {
+const Information = ({route, navigation}) => {
+    //-------------------------------------------------------
+    //ZONE
+    const { itemId } = route.params;
+    
+    //-------------------------------------------------------
+    //
+    const onPressBack = () => {
       navigation.navigate('list');
     }
     // =====================================================
@@ -20,10 +33,25 @@ const Information = ({navigation}) => {
     // =====================================================
     return ( 
         <View style={styles.container}>
-            <Text>DESDE EL INFORMATION</Text>
-             <Button icon="camera" mode="contained" onPress={onPressDos}>
-              Press me
-            </Button>
+          
+            <View style = {styles.section_1}>
+              <ToolBarNormal title={`Información ${itemId}`}/>
+            </View>
+            <View style = {styles.section_2}>
+              <ScrollView style={styles.scrollView}>
+                <FormInformation />
+                <ListInformation />
+              </ScrollView>
+            </View>
+            <View style = {styles.section_3}>
+              <Text style={styles.footer}>Electronica 2020 - Minus Maya</Text>
+            </View>
+            <FAB
+              style={styles.fab}
+              // small
+              icon="keyboard-backspace"
+              onPress={onPressBack}
+            />
         </View>
      );
 }

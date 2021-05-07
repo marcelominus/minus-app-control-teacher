@@ -24,6 +24,8 @@ target 'minusmayacontrolteacher' do
 
   pod 'react-native-image-picker', :path => '../node_modules/react-native-image-picker'
 
+  pod 'react-native-safe-area-context', :path => '../node_modules/react-native-safe-area-context'
+
   target 'minusmayacontrolteacherTests' do
     inherit! :complete
     # Pods for testing
