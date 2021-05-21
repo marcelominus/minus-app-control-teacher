@@ -1,14 +1,19 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 //*******************************************************
-//
+//Importamos componente sde REACT NATIVE
 import { View, Text } from 'react-native';
 //*******************************************************
-//
+//Importamos componentes de REACT PAPER
 import { TextInput, Button, Checkbox } from 'react-native-paper';
 //*******************************************************
-//
+//Importamos los STYLES
 import {styles} from '../../resource/style/components/login/styleFormLogin'; 
-import { showMessage, hideMessage } from "react-native-flash-message";
+//*******************************************************
+//Importmaos los MESSAGE DE  FLASK
+import {messageSuccess, messageWarning, messageDanger} from '../../resource/js/message'
+//*******************************************************
+//Importamos los CONTEXT
+import loginContext from '../../hook/login/loginContext';
 // =====================================================
 // INICIO DE CLASE  */}
 // =====================================================
@@ -27,6 +32,10 @@ const FormLogin = ({navigation}) => {
         setPass(e)
     }
     //-------------------------------------------------------
+    //ZONE DE USE CONTEXT
+    const {functionPetitionLogin} = useContext(loginContext)
+
+    //-------------------------------------------------------
     //ZONE FUNCTION
     const onPressLogin = () => {
         //-------------------------------------------------------
@@ -35,18 +44,22 @@ const FormLogin = ({navigation}) => {
         setPass(pass.toLowerCase());
 
         if(user.trim() === '' || pass.trim() === ''){
-            showMessage({
-              message: "Datos Vacios revise el Formulario",
-              type: "warning",
-            });
+            messageWarning("Datos vacios, Revise Nuevamente el Formulario");
         }else{
-            showMessage({
-              message: "Correcto, Bienvenido",
-              type: "success",
-            });
-            setTimeout(() => {
-                navigation.navigate('form');
-            }, 2500);
+
+            functionPetitionLogin(user, pass).then( e => {
+                if (e === "empty") {
+                  messageWarning("Usuario No Encontrado");
+                } else if (e === "fail-server") {
+                  messageDanger("Fallo, Intente mas Tarde");
+                } else {
+                  messageSuccess("Correcto,  Bienvenido al Sistema");
+                  setTimeout(() => {
+                    navigation.navigate('form');
+                  }, 2500);
+                }
+            })
+            
         }
     }
     // =====================================================

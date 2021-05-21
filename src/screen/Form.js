@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 //*******************************************************
 //
 import {View, Text, SafeAreaView, ScrollView, KeyboardAvoidingView} from 'react-native';
@@ -12,11 +12,21 @@ import ToolBarDrawer from '../components/tool/ToolBarDrawer';
 //
 import CardForm from '../components/form/CardForm';
 import FormData from '../components/form/FormData';
+//*******************************************************
+//
+import {getDataString} from '../resource/js/storestring'
 // =====================================================
 // INICIO DE CLASE  */}
 // =====================================================
 const Form = ({navigation}) => {
-
+    //-------------------------------------------------------
+    //ZONE USE EFFECT
+    useEffect(() => {
+        console.log('MARCELO POMA CALLE');
+        getDataString('datauser').then( e => {
+            console.log(e);
+        });
+    }, [])
     // =====================================================
     // INICIO DE COMPONENTE}
     // =====================================================

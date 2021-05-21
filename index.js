@@ -7,6 +7,11 @@ import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import App from './App';
 import {name as appName} from './app.json';
 import FlashMessage from "react-native-flash-message";
+
+//
+import LoginState from './src/hook/login/LoginState';
+import InscriptionState from './src/hook/inscription/InscriptionState';
+import FormState from './src/hook/form/FormState';
 // =====================================================
 // INICIO DE CLASE  */}
 // =====================================================
@@ -22,10 +27,16 @@ export default function Main() {
 };
 
   return (
-      <PaperProvider theme={theme}>
-        <App />
-        <FlashMessage position="top" titleStyle={{ textAlign : 'center'}}/>
-      </PaperProvider>
+    <LoginState>
+      <InscriptionState >
+        <FormState>
+          <PaperProvider theme={theme}>
+            <App />
+            <FlashMessage position="top" titleStyle={{ textAlign : 'center'}}/>
+          </PaperProvider>
+        </FormState>
+      </InscriptionState>
+    </LoginState>
   );
 }
 AppRegistry.registerComponent(appName, () => Main);
