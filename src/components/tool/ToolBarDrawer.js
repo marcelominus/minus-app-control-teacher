@@ -1,20 +1,37 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 //*******************************************************
 //
-import {View, Text} from 'react-native'
-//*******************************************************
+import {View, Text, Alert} from 'react-native'
+//****************************************************************
 //
 import { Button, IconButton, Menu, Divider, Provider } from 'react-native-paper';
 //*******************************************************
 //
 import {styles} from '../../resource/style/components/tool/styleToolBarDrawer';
+//****************************************************************
+//
+import toolContext from '../../hook/tool/toolContext';
+
+//************************************************************
 // =====================================================
 // INICIO DE CLASE  */}
 // =====================================================
 const ToolBarDrawer = ({navigation, title}) => {
   const [visible, setVisible] = useState(false);
-
-  const openMenu = () => setVisible(true);
+  const {functionResetUser} = useContext(toolContext)
+  const openMenu = () => {
+    Alert.alert('Salir', 'Esta seguro de Salir', [
+      {
+        text: 'Cancel',
+        onPress: () => null,
+        style: 'cancel',
+      },
+      {text: 'YES', onPress: () => {
+        functionResetUser();
+        navigation.navigate('start');
+      }},
+    ]);
+  };
 
   const closeMenu = () => setVisible(false);
 

@@ -17,8 +17,7 @@ const LisDataItem = ({element, navigation}) => {
     //-------------------------------------------------------
     //
     const onPressElement = () => {
-        console.log(element);
-        navigation.navigate('information', { itemId: element });
+        navigation.navigate('information', { itemId: element.initialins, itemIdDes : element.identifierins });
     }
     // =====================================================
     // INICIO DE COMPONENTE}
@@ -26,8 +25,8 @@ const LisDataItem = ({element, navigation}) => {
     return ( 
         <View>
             <List.Item
-              title={element}
-              description="Materia de Campos Eletromagneticos"
+              title={element.initialins}
+              description={element.descriptionins}
               left={props => <List.Icon {...props} icon="account-details" />}
               right={props => <List.Icon {...props} icon="chevron-right" />}
               onPress={onPressElement}

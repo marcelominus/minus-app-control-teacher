@@ -1,13 +1,14 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useState, useEffect, useContext, useRef} from 'react';
 //*******************************************************
 //
-import {View, Text, Image} from 'react-native';
+import {View, Text, Image, Keyboard} from 'react-native';
 //*******************************************************
 //
 import { Button, TextInput, Badge, Menu, } from 'react-native-paper';
 //*******************************************************
 //
 import {getDataString, storeDataString} from '../../resource/js/storestring';
+import {getData} from '../../resource/js/storearray';
 //*******************************************************
 //
 import {styles} from '../../resource/style/components/form/styleFormData';
@@ -29,7 +30,10 @@ import {messageWarning, messageSuccess, messageDanger} from '../../resource/js/m
 // =====================================================
 // INICIO DE CLASE  */}
 // =====================================================
-const FormData = () => {
+const FormData = ({hide}) => {
+    //-----------------------------------------------------------------
+    //
+    const input = useRef();
     //-------------------------------------------------------
     //ZONE USE STATE
     const [openmodal, setOpenModal] = useState(false);
@@ -37,11 +41,19 @@ const FormData = () => {
     const [data, setData] = useState({
         date : '',
         time : '',
+        information : ''
     })
-    const {date, time} = data;
+    const {date, time, information} = data;
+    //
+    const onChangeInformation = (e) => {
+        setData({
+            ...data,
+            information : e
+        })
+    }
     //-------------------------------------------------------
     //ZONE DE USE CONTEXT
-    const {resetphoto, disable, functionResetPhoto, functionSaveDate, functionSaveTimeStart, functionSaveDisable } = useContext(formContext)
+    const {disable, resetdata, functionSaveDate, functionSaveTimeStart, functionSaveDisable, functionCreateData, functionResetData } = useContext(formContext)
     //-------------------------------------------------------
     //ZONE USE EFFECT
     useEffect(() => {
@@ -60,6 +72,19 @@ const FormData = () => {
             }
         })
     }, [])
+    //
+    useEffect(() => {
+        if(resetdata === true){
+            functionSaveDisable(false); //Resetea los BOTONES
+            setOpenCard(false);
+        }
+      }, [resetdata])
+
+    useEffect(() => {
+        if(hide === true){
+            input.current.blur();
+        }
+    }, [hide])
     //-------------------------------------------------------
     //ZONE FUNCTION
     const onPressSendPhoto = () => {
@@ -69,14 +94,12 @@ const FormData = () => {
             if(e === "null" || e === null){
                 messageDanger("Es obligatorio tomar la imagen de camara")
             }else{
-                let fecha = moment().format('YYYY-MM-DD');
+                let fecha = moment().format('YYYY/MM/DD');
                 let tiempo = moment().format('LT');
                 // -------------------------------------------------------
-                //
                 functionSaveDate(fecha);
                 functionSaveTimeStart(tiempo);
                 //-------------------------------------------------------
-                //
                 getDataString('datadate').then( e => {
                     if(e !== null ){
                         getDataString('datatimestart').then( f => {
@@ -96,10 +119,52 @@ const FormData = () => {
                 })
             }
         });
-        
-        
+    }
 
-        // setOpenCard(!opencard)
+    const onPressSendInformation = () => {
+        getDataString('dataselect').then( h => {
+            if( h === 'null' || h === null){
+                messageWarning("Debe seleccionar una materia")
+            }else{
+                getDataString('dataphoto').then( e => {
+                    if(e === "null" || e === null){
+                        messageDanger('Debe sacar la foto de clase');
+                    }else{
+                        getDataString('datadate').then( f => {
+                            getDataString('datatimestart').then( g => {
+                                if(f === "null" || f === null){
+                                    messageDanger('Debe registrar la imagen tomada')
+                                }else{
+                                    if(information === undefined || information === ""){
+                                        messageWarning("Informacion Vacia, Formulario Incompleto")
+                                    }else{
+                                        getData('datauser').then( i => {
+                                            functionCreateData(i[0].identifier, h, f, g, information, e).then( j => {
+                                                if( j === true){
+                                                    messageSuccess('Correcto dato Registrado');
+                                                    resetInformation();
+                                                }else{
+                                                    messageDanger('Error intente mas tarde');
+                                                }
+                                            })
+                                        })
+                                    }
+                                }
+                            })
+                        })
+                    }
+                })
+            }
+        })
+    }
+
+    const resetInformation = () => {
+        setData({
+            ...data,
+            information : '',
+        })
+        functionResetData(true);
+        functionResetData(false);
     }
     // =====================================================
     // INICIO DE COMPONENTE}
@@ -135,14 +200,17 @@ const FormData = () => {
               mode ={'outlined'}
               style = {styles.input_data}
               placeholder ='Ingrese los datos de la Clase'
-              underlineColor ='#000'
               multiline  = {true}
-              numberOfLines = {15}
+              numberOfLines = {10}
+              onChangeText= {onChangeInformation}
+              value={information}
+              ref={input}
             />
             <Button 
                 icon="camera" 
                 mode="contained" 
-                onPress={() => setOpenModal(!openmodal)}
+                // onPress={() => setOpenModal(!openmodal)}
+                onPress={onPressSendInformation}
                 style={styles.button_loading_photo}
                 labelStyle={styles.text_button_loading_photo}
             >

@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 //*******************************************************
 //
-import {View, Text} from 'react-native';
+import {View, Text, Alert, BackHandler} from 'react-native';
 //*******************************************************
 //
 import {styles} from '../resource/style/screen/styleInformationList';
@@ -14,7 +14,30 @@ import ListData from '../components/list/ListData';
 // INICIO DE CLASE  */}
 // =====================================================
 const InformationList = ({navigation}) => {
-
+    useEffect(() => {
+        console.log('LENNY LAURA')
+        //Funcion del boton de atras BACK HARDWARE
+        const backAction = () => {
+          ///+++++++++++++++++++++++++++++++++++++
+          //Pregunta si realmente se desea SALIR
+          Alert.alert('Salir', 'Esta seguro de Salir', [
+            {
+              text: 'Cancel',
+              onPress: () => null,
+              style: 'cancel',
+            },
+            {text: 'YES', onPress: () => BackHandler.exitApp()},
+          ]);
+          return true;
+        };
+        //Ejecucion de la funcion de RETROCESO
+        const backHandler = BackHandler.addEventListener(
+          'hardwareBackPress',
+          backAction,
+        );
+    
+        return () => backHandler.remove();
+    }, []);
     // =====================================================
     // INICIO DE COMPONENTE}
     // =====================================================

@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 //*******************************************************
 //
-import {View, Text, ScrollView} from 'react-native';
+import {View, Text, ScrollView, Alert, BackHandler} from 'react-native';
 //*******************************************************
 //
 import {styles} from '../resource/style/screen/styleInformation';
@@ -15,17 +15,36 @@ import ToolBarNormal from '../components/tool/ToolBarNormal';
 //
 import FormInformation from '../components/information/FormInformation';
 import ListInformation from '../components/information/ListInformation';
+//****************************************************************
+//
+import informationContext from '../hook/information/informationContext';
 // =====================================================
 // INICIO DE CLASE  */}
 // =====================================================
 const Information = ({route, navigation}) => {
     //-------------------------------------------------------
-    //ZONE
-    const { itemId } = route.params;
-    
-    //-------------------------------------------------------
+    //ZONE ROUTES PARAMS
+    const { itemId, itemIdDes } = route.params;
+    //-----------------------------------------------------------------
+    //ZONE USE CONTEXT
+    const {disable, back, functionDisableCard, functionBack} = useContext(informationContext);
+    //-----------------------------------------------------------------
     //
+    useEffect(() => {
+      //Fucion que se usa para el boton de atras
+      const backAction = async () => {
+        await navigation.navigate('list');
+        return true;
+      };
+      BackHandler.addEventListener('hardwareBackPress', backAction);
+  
+      return () =>
+        BackHandler.removeEventListener('hardwareBackPress', backAction);
+    }, []);
+    //-------------------------------------------------------
+    //ZONE FUNCTION
     const onPressBack = () => {
+      functionDisableCard(false);
       navigation.navigate('list');
     }
     // =====================================================
@@ -39,8 +58,12 @@ const Information = ({route, navigation}) => {
             </View>
             <View style = {styles.section_2}>
               <ScrollView style={styles.scrollView}>
-                <FormInformation />
-                <ListInformation />
+                <FormInformation itemIdDes={itemIdDes}/>
+                {disable ? 
+                  <ListInformation />
+                :
+                  null
+                }
               </ScrollView>
             </View>
             <View style = {styles.section_3}>

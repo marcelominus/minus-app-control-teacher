@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 //*******************************************************
 //
 import {View, Text, Image} from 'react-native';
@@ -8,12 +8,22 @@ import {styles} from '../resource/style/screen/styleStart';
 //*******************************************************
 //
 import { Button } from 'react-native-paper';
-
+//****************************************************************
+//
+import {getData} from '../resource/js/storearray';
 // =====================================================
 // INICIO DE CLASE  */}
 // =====================================================
 const Start = ({navigation}) => {
-    
+    //-----------------------------------------------------------------
+    //
+    useEffect(() => {
+      getData('datauser').then( e => {
+          if(e !== null){
+              navigation.navigate('form');
+          }
+      })
+    }, [])
     //-------------------------------------------------------
     //  ZONE FUNTION
     const onPressWelcome = () => {

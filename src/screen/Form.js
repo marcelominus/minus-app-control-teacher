@@ -1,7 +1,7 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 //*******************************************************
 //
-import {View, Text, SafeAreaView, ScrollView, KeyboardAvoidingView} from 'react-native';
+import {View, Text, SafeAreaView, ScrollView, KeyboardAvoidingView, Keyboard} from 'react-native';
 //*******************************************************
 //
 import {styles} from '../resource/style/screen/styleForm';
@@ -19,14 +19,28 @@ import {getDataString} from '../resource/js/storestring'
 // INICIO DE CLASE  */}
 // =====================================================
 const Form = ({navigation}) => {
+    const [hide, setHide] = useState(false);
     //-------------------------------------------------------
     //ZONE USE EFFECT
     useEffect(() => {
-        console.log('MARCELO POMA CALLE');
-        getDataString('datauser').then( e => {
-            console.log(e);
-        });
-    }, [])
+        const keyboardDidShowListener = Keyboard.addListener(
+          'keyboardDidShow',
+          () => {
+            setHide(false);
+          }
+        );
+        const keyboardDidHideListener = Keyboard.addListener(
+          'keyboardDidHide',
+          () => {
+            setHide(true);
+          }
+        );
+    
+        return () => {
+          keyboardDidHideListener.remove();
+          keyboardDidShowListener.remove();
+        };
+      }, []);
     // =====================================================
     // INICIO DE COMPONENTE}
     // =====================================================
@@ -46,7 +60,7 @@ const Form = ({navigation}) => {
                                   <CardForm/>
                               </View>
                               <View style={styles.section_2_2}>
-                                  <FormData />
+                                  <FormData hide={hide}/>
                               </View>
                         </ScrollView>
                   </KeyboardAvoidingView>

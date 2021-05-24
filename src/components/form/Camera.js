@@ -27,7 +27,7 @@ const Camera = () => {
   const [sendphoto, setSendPhoto] = useState(false);
   //-------------------------------------------------------
   //ZONE USE CONTEXT
-  const {disable , resetphoto, functionSavePhoto, functionResetPhoto} = useContext(formContext)
+  const {disable , resetphoto, resetdata, functionSavePhoto, functionResetPhoto} = useContext(formContext)
 
   //-------------------------------------------------------
   //ZONE USE EFFECT
@@ -41,6 +41,11 @@ const Camera = () => {
     })
   }, [resetphoto])
 
+  useEffect(() => {
+    if(resetdata === true){
+      setSendPhoto(false);
+    }
+  }, [resetdata])
   //-------------------------------------------------------
   //ZONE FUNCTION
   

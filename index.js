@@ -12,6 +12,9 @@ import FlashMessage from "react-native-flash-message";
 import LoginState from './src/hook/login/LoginState';
 import InscriptionState from './src/hook/inscription/InscriptionState';
 import FormState from './src/hook/form/FormState';
+import InformationState from './src/hook/information/InformationState';
+import SupportState from './src/hook/support/SupportState';
+import ToolState from './src/hook/tool/ToolState';
 // =====================================================
 // INICIO DE CLASE  */}
 // =====================================================
@@ -30,10 +33,16 @@ export default function Main() {
     <LoginState>
       <InscriptionState >
         <FormState>
-          <PaperProvider theme={theme}>
-            <App />
-            <FlashMessage position="top" titleStyle={{ textAlign : 'center'}}/>
-          </PaperProvider>
+          <InformationState>
+            <SupportState>
+              <ToolState>
+                <PaperProvider theme={theme}>
+                  <App />
+                  <FlashMessage position="top" titleStyle={{ textAlign : 'center'}}/>
+                </PaperProvider>
+              </ToolState>
+            </SupportState>
+          </InformationState>
         </FormState>
       </InscriptionState>
     </LoginState>

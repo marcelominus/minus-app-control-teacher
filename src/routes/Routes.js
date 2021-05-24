@@ -54,12 +54,12 @@ const Routes = () => {
                     options={{
                         title: 'Soporte Tecnico',
                 }}/> 
-                <Drawer.Screen 
+                {/* <Drawer.Screen 
                     name='about' 
                     component={About} 
                     options={{
                         title: 'Ayuda',
-                }}/> 
+                }}/>  */}
             </Drawer.Navigator>
         )
     }

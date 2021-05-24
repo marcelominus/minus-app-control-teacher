@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 //*******************************************************
 //
 import {View, Text} from 'react-native'
@@ -13,10 +13,13 @@ import { styles } from '../../resource/style/components/information/styleFormInf
 //
 import FormInformationPicker from './FormInformationPicker';
 import FormInformationSelect from './FormInformationSelect';
+//****************************************************************
+//
+import informationContext from '../../hook/information/informationContext';
 // =====================================================
 // INICIO DE CLASE  */}
 // =====================================================
-const FormInformation = () => {
+const FormInformation = ({itemIdDes}) => {
 
     const state = {
         date: new Date(),
@@ -24,13 +27,15 @@ const FormInformation = () => {
     //-------------------------------------------------------
     //
     const [check, setCheck] = useState(false);
+    //-----------------------------------------------------------------
+    //ZONE USE CONTEXT
+    const {functionDisableCard} = useContext(informationContext);
     //-------------------------------------------------------
     //ZONE FUNCTION
     const onToggleSwitch = () => {
+        functionDisableCard(false);
         setCheck(!check)
     }
-
-    
 
     // =====================================================
     // INICIO DE COMPONENTE}
@@ -47,8 +52,8 @@ const FormInformation = () => {
                 </View>
                 <View style={styles.section_2}>
                     { check ? 
-                        <FormInformationPicker/>: 
-                        <FormInformationSelect />
+                        <FormInformationPicker itemIdDes={itemIdDes}/>: 
+                        <FormInformationSelect itemIdDes={itemIdDes}/>
                     }
                 </View>
             </View>
