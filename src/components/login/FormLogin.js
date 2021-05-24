@@ -71,7 +71,7 @@ const FormLogin = ({navigation}) => {
                 <Text style={styles.title_login}>Ingresar Datos</Text>
                 <Text style={styles.label}>Usuario</Text>
                 <TextInput
-                    label="User"
+                    label="Usuario"
                     mode ={'outlined'}
                     style = {styles.input_user}
                     placeholder ='Ingrese su usuario'

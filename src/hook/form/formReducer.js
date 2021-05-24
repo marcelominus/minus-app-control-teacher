@@ -1,7 +1,7 @@
 import { PETITION_FORM_PHOTO, PETITION_FORM_RESET_PHOTO, PETITION_SAVE_DATE, PETITION_SAVE_TIME_START, PETITION_SAVE_DISABLE, PETITION_SAVE_SELECT, PETITION_RESET_DATA} from "../../utils/index";
 //*******************************************************
 //Importamos asyn storage
-import {storeDataString} from '../../resource/js/storestring';
+import {storeDataString, removeDataString} from '../../resource/js/storestring';
 //******************************************************************************
 //Zona de SWITCH
 export default (state, action) => {
@@ -37,10 +37,11 @@ export default (state, action) => {
         ...state,
       }
     case PETITION_RESET_DATA:
-      storeDataString( "null" ,'dataphoto');
-      storeDataString( "null" ,'dataselect');
-      storeDataString( "null" ,'datadate');
-      storeDataString( "null" ,'datatimestart');
+      removeDataString('dataphoto');
+      removeDataString('dataselect');
+      removeDataString('datadate');
+      removeDataString('datatimestart');
+     
       return {
         ...state,
         resetdata : action.payload
