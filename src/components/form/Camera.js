@@ -68,7 +68,7 @@ const Camera = () => {
                   includeBase64: true,
                   maxHeight: 200,
                   maxWidth: 400,
-                  quality : 0.2
+                  quality : 0.5
                 },
                 (response) => {
                   if(response.base64 !== undefined){
