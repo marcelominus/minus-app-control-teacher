@@ -8,11 +8,11 @@ import formContext from "./formContext";
 import formReducer from "./formReducer";
 //***************************************************************** */
 //Importamos los TYPES
-import { PETITION_FORM_PHOTO, PETITION_FORM_RESET_PHOTO, PETITION_SAVE_DATE, PETITION_SAVE_TIME_START, PETITION_SAVE_DISABLE, PETITION_SAVE_SELECT, PETITION_RESET_DATA} from "../../utils/index";
+import { PETITION_FORM_PHOTO, PETITION_FORM_RESET_PHOTO, PETITION_SAVE_DATE, PETITION_SAVE_TIME_START, PETITION_SAVE_DISABLE, PETITION_SAVE_SELECT, PETITION_RESET_DATA, } from "../../utils/index";
 //***************************************************************** */
 //Importamos las direcciones de LOGIN
 // import { direccion_admin_login } from "../../resource/js/directions";
-import {direccion_admin_create_data} from '../../resource/js/directions';
+import {direccion_admin_create_data, direccion_admin_petition_mounth, direccion_admin_petition_time_start} from '../../resource/js/directions';
 // =====================================================
 // INICIO DE CLASE  */}
 // =====================================================
@@ -21,6 +21,9 @@ const FormState = (props) => {
     resetphoto : false,
     disable : false,
     resetdata : false,
+    informationmodal : [{
+      identifieruse : '',
+    }]
   };
   const [state, dispatch] = useReducer(formReducer, initialState);
 
@@ -82,7 +85,7 @@ const FormState = (props) => {
       });
       const solutionPetition = petitionReadData.data;
       if (solutionPetition.response == "success") {
-        return true;
+        return solutionPetition.data;
       } else {
         return false;
       }
@@ -97,6 +100,39 @@ const FormState = (props) => {
       payload : value
     })
   }
+
+  const functionPetitionReadMounth = async() => {
+    try {
+      const url = direccion_admin_petition_mounth;
+      const petitionReadData = await clienteAxios.post(url, {
+      });
+      const solutionPetition = petitionReadData.data;
+      if (solutionPetition.response !== "error") {
+        return solutionPetition.response;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const functionPetitionReadTimeStart = async() => {
+    try {
+      const url = direccion_admin_petition_time_start;
+      const petitionReadData = await clienteAxios.post(url, {
+      });
+      const solutionPetition = petitionReadData.data;
+      if (solutionPetition.response !== "error") {
+        return solutionPetition.response;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   //=====================================================
   //INICIO DE COMPONENTE
   //=====================================================
@@ -113,7 +149,9 @@ const FormState = (props) => {
         functionSaveDisable,
         functionSaveSelect,
         functionCreateData,
-        functionResetData
+        functionResetData,
+        functionPetitionReadMounth,
+        functionPetitionReadTimeStart
       }}
     >
       {props.children}

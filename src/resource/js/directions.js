@@ -8,6 +8,9 @@ export const direccion_admin_login = `${IP_SERVER}/api/login/`;
 export const direccion_admin_inscription = `${IP_SERVER}/api/inscription/inscription-read`;
 export const direccion_admin_create_data = `${IP_SERVER}/api/data/data-create`;
 
+export const direccion_admin_petition_mounth = `${IP_SERVER}/api/data/data-read-mount`;
+export const direccion_admin_petition_time_start = `${IP_SERVER}/api/data/data-read-time-start`;
+
 //Direccion de URL para petiticion de informacion DOCENTE
 export const direccion_admin_read_select = `${IP_SERVER}/api/data/data-read-month`;
 export const direccion_admin_read_picker = `${IP_SERVER}/api/data/data-read-unique`;

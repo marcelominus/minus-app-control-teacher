@@ -37,6 +37,8 @@ const FormData = ({hide}) => {
     //-------------------------------------------------------
     //ZONE USE STATE
     const [openmodal, setOpenModal] = useState(false);
+    const [informationmodal, setInformationModal] = useState([]);
+
     const [opencard, setOpenCard] = useState(false);
     const [data, setData] = useState({
         date : '',
@@ -53,7 +55,7 @@ const FormData = ({hide}) => {
     }
     //-------------------------------------------------------
     //ZONE DE USE CONTEXT
-    const {disable, resetdata, functionSaveDate, functionSaveTimeStart, functionSaveDisable, functionCreateData, functionResetData } = useContext(formContext)
+    const {disable, resetdata, functionSaveDate, functionSaveTimeStart, functionSaveDisable, functionCreateData, functionResetData, functionPetitionReadMounth, functionPetitionReadTimeStart } = useContext(formContext)
     //-------------------------------------------------------
     //ZONE USE EFFECT
     useEffect(() => {
@@ -94,29 +96,45 @@ const FormData = ({hide}) => {
             if(e === "null" || e === null){
                 messageDanger("Es obligatorio tomar la imagen de camara")
             }else{
-                let fecha = moment().format('YYYY/MM/DD');
-                let tiempo = moment().format('LT');
-                // -------------------------------------------------------
-                functionSaveDate(fecha);
-                functionSaveTimeStart(tiempo);
-                //-------------------------------------------------------
-                getDataString('datadate').then( e => {
-                    if(e !== null ){
-                        getDataString('datatimestart').then( f => {
-                            if( f !== null){
-                                setData({
-                                    date : e,
-                                    time : f,
-                                });
-                                messageSuccess("Datos Guardados Correctamente");
-                                setOpenCard(true);
-                                functionSaveDisable(true);
-                            }
-                        })
+                let fecha = '';
+                let tiempo = '';
+
+                functionPetitionReadMounth().then( x => {
+                    if( e === false){
+                        messageDanger("Fallo, Intente mas tarde")
                     }else{
-                        messageDanger("Error Intente mas Tarde");
+                        fecha = x;
+                        functionPetitionReadTimeStart().then( y => {
+                            if( e === false){
+                                messageDanger("Fallo, Intente mas tarde")
+                            }else{
+                                tiempo=y;
+                                // -------------------------------------------------------
+                                functionSaveDate(fecha);
+                                functionSaveTimeStart(tiempo);
+                                //-------------------------------------------------------
+                                getDataString('datadate').then( e => {
+                                    if(e !== null ){
+                                        getDataString('datatimestart').then( f => {
+                                            if( f !== null){
+                                                setData({
+                                                    date : e,
+                                                    time : f,
+                                                });
+                                                messageSuccess("Datos Guardados Correctamente");
+                                                setOpenCard(true);
+                                                functionSaveDisable(true);
+                                            }
+                                        })
+                                    }else{
+                                        messageDanger("Error Intente mas Tarde");
+                                    }
+                                })
+                            }   
+                        })
                     }
                 })
+                
             }
         });
     }
@@ -140,11 +158,13 @@ const FormData = ({hide}) => {
                                     }else{
                                         getData('datauser').then( i => {
                                             functionCreateData(i[0].identifier, h, f, g, information, e).then( j => {
-                                                if( j === true){
+                                                if( j === false){
+                                                    messageDanger('Error intente mas tarde');
+                                                }else{
                                                     messageSuccess('Correcto dato Registrado');
                                                     resetInformation();
-                                                }else{
-                                                    messageDanger('Error intente mas tarde');
+                                                    setInformationModal(j);
+                                                    setOpenModal(true);
                                                 }
                                             })
                                         })
@@ -201,7 +221,7 @@ const FormData = ({hide}) => {
               style = {styles.input_data}
               placeholder ='Ingrese los datos de la Clase'
               multiline  = {true}
-              numberOfLines = {10}
+              numberOfLines = {12}
               onChangeText= {onChangeInformation}
               value={information}
               ref={input}
@@ -216,7 +236,11 @@ const FormData = ({hide}) => {
             >
                Guardar Fin de Clase
             </Button>
-            <ModalData openModal={openmodal} setOpenModal={setOpenModal}/>
+            <ModalData 
+                openModal={openmodal} 
+                setOpenModal={setOpenModal} 
+                informationModal={informationmodal}
+            />
         </View>
      );
 }
